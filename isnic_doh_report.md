@@ -486,6 +486,8 @@ The risks associated with increased DNS traffic centralization, and increased
 legal scrutiny may outweigh these benefits.
 
 
+--------------------------------------------------------------------------------
+
 [1]: https://tools.ietf.org/html/rfc8484
 [2]: https://tools.ietf.org/html/rfc1035
 [3]: https://tools.ietf.org/html/rfc7540
@@ -503,7 +505,6 @@ legal scrutiny may outweigh these benefits.
 [15]: https://wiki.mozilla.org/Security/DOH-resolver-policy
 [16]: https://blog.chromium.org/2019/10/addressing-some-misconceptions-about.html
 [17]: https://00f.net/2019/11/03/stop-using-low-dns-ttls/
-
 
 <style type='text/css'>
   body { max-width: 45em; margin: 1em auto;
