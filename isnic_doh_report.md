@@ -3,15 +3,15 @@
 # Should Registries offer DoH?
 
    * Author: Bjarni R. Einarsson, <bre@isnic.is>
-   * Version: 0.1
-   * Date: 2019-11-06  
+   * Version: 0.2
+   * Date: 2019-11-07
 
 ## 0.1. Abstract
 
 This document gives an overview over DNS over HTTPS (DoH), both the technical
 and political issues surrounding the technology, with an analysis designed to
 inform decisions on whether DNS Registries in general should invest in offering
-DoH service to the public. 
+DoH-based recursive resolver service to the public.
 
 ## 0.2. Disclaimer
 
@@ -22,6 +22,7 @@ Oversimpifications and rampant speculation abound. Reader beware!
 
 |    date    | version | comments       | Author
 |:----------:|:-------:|:-------------- |:-------------------
+| 2019-11-07 |   0.2   | Draft          | Bjarni R. Einarsson
 | 2019-11-05 |   0.1   | Draft          | Bjarni R. Einarsson
 
 ## 0.4. META: Tooling
@@ -141,10 +142,11 @@ ISP. However, the opportunities for anyone else to track users and monitor
 their DNS requests have been quite limited.
 
 The DNS protocol itself is not designed to facilitate user tracking (although
-[DNS cookies do pose some risks][13]) and DNS users often share a common
-resolver with a larger group. This means the operator of the resolver, and the
-operators of any intervening networks, could monitor and track users' DNS
-traffic. The content providers themselves (and advertisers) usually could not.
+[DNS cookies][13] and [EDNS Client Subnet signaling][18] have undermined this)
+and DNS users often share a common resolver with a larger group. This means the
+operator of the resolver, and the operators of any intervening networks, could
+monitor and track users' DNS traffic. The content providers themselves (and
+advertisers) usually could not.
 
 The political side of this will be analyzed in more detail later in this
 document, but it is safe to say that the overall structure of the network (who
@@ -221,8 +223,9 @@ perceived to enable certain forms of monitoring, even as it thwarts others.
 DoH is being deployed by Mozilla in such a way that it deprives ISPs (and local
 governments) of the opportunity to track, monitor and modify DNS traffic.
 Instead, that capability is shifted to a relatively smaller number of dedicated
-DoH providers; providers who are already major providers of other, unrelated
-services such as hosting, advertisements or content distribution.
+DoH providers (and their local governments); providers who are already major
+providers of other, unrelated services such as hosting, advertisements or
+content distribution.
 
 [The Chrome team's approach is currently more nuanced][16]. However, it seems
 likely that Google will eventually follow Mozilla's lead, for reasons discussed
@@ -302,18 +305,25 @@ DoH is more expensive to run than a traditional DNS server.
 This derives from the fact that DoH is a stateful, connection-oriented
 protocol. Clients create long-lived connections, each of which consumes some
 RAM on both the client and the server for the duration of the connection, even
-if it is not in active use (it will expire after a while). This is not the case
-for UDP-based DNS, where each request stands alone and once the server has
-responded it can forget all about it and put any available resources to other
-use. DoH is also more bandwidth intensive and requires more computation than
-plain DNS.
+if it is not in active use (it will expire after a while). This is much less
+true for traditional DNS, due to its reliance on UDP, where each request stands
+alone and once the server has responded it can forget all about it and put any
+available resources to other use (traditional DNS traffic may also use TCP, but
+it is considered a secondary fallback mechanism and is less used). DoH is also
+more bandwidth intensive and requires more computation than plain DNS.
 
-In order to handle a comparable amount of request traffic, a DoH provider will
-almost certainly need to invest in more infrastructure than a traditional DNS
-resolver of similar size. The requirements are relatively well undrestood by
-the industry as a whole, but do involve a different "stack" of technologies
-from those commonly relied upon by providers specializing in DNS. So additional
-training may also be neccessary.
+How great the cost difference is, is still suprisingly difficult to estimate.
+Traditional DNS servers, in practice, are required to over-provision in order
+to cope with denial of service attacks, which are less of a concern for DoH.
+And as DNSSEC has become more common, increased response size has increased the
+use of TCP for DNS, further reducing the performance advantage.
+
+It still seems safe to assume that in order to handle a comparable amount of
+request traffic, a DoH provider will need to invest in more infrastructure than
+a traditional DNS resolver of similar size. The requirements for scalable web
+services are relatively well understood by the industry as a whole, but do
+involve a different "stack" of technologies from those commonly relied upon by
+providers specializing in DNS. So additional training may also be neccessary.
 
 FIXME: Numbers!
 
@@ -505,6 +515,7 @@ legal scrutiny may outweigh these benefits.
 [15]: https://wiki.mozilla.org/Security/DOH-resolver-policy
 [16]: https://blog.chromium.org/2019/10/addressing-some-misconceptions-about.html
 [17]: https://00f.net/2019/11/03/stop-using-low-dns-ttls/
+[18]: https://tools.ietf.org/html/rfc7871
 
 <style type='text/css'>
   body { max-width: 45em; margin: 1em auto;
