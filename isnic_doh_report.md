@@ -7,6 +7,34 @@
    * Date: 2019-11-11
    * Source: <https://github.com/BRE-ISNIC/bre-doh-analysis>
 
+### Table of Contents
+
+* [Should Registries offer DoH?](#should-registries-offer-doh)
+   * [0.1. Abstract](#01-abstract)
+   * [0.2. Disclaimer](#02-disclaimer)
+   * [0.3. Credit and License](#03-credit-and-license)
+   * [0.4. Versions](#04-versions)
+* [1. Technological background](#1-technological-background)
+   * [1.1. What is DNS over HTTPS (DoH)?](#11-what-is-dns-over-https-doh)
+   * [1.2. Alternatives: DoT and DNSCrypt](#12-alternatives-dot-and-dnscrypt)
+   * [1.3. Alternatives: DNSSEC](#13-alternatives-dnssec)
+   * [1.4. Anonymity and User Tracking](#14-anonymity-and-user-tracking)
+   * [1.5. Is DoH winning?](#15-is-doh-winning)
+* [2. Politics](#2-politics)
+   * [2.1. Points of View](#21-points-of-view)
+* [3. Business Issues](#3-business-issues)
+   * [3.1. Who can Provide DoH Service?](#31-who-can-provide-doh-service)
+   * [3.2. Scale and Cost](#32-scale-and-cost)
+   * [3.3. Why Provide DoH?](#33-why-provide-doh)
+      * [3.3.1. Public Interest](#331-public-interest)
+      * [3.3.2. Subscription Custom Resolvers](#332-subscription-custom-resolvers)
+      * [3.3.3. Facilitating Content Delivery](#333-facilitating-content-delivery)
+      * [3.3.4. User Tracking and Metrics](#334-user-tracking-and-metrics)
+* [4. Relevance to DNS Registries](#4-relevance-to-dns-registries)
+   * [4.1. Discussion](#41-discussion)
+   * [4.2. Registry-specific Risks](#42-registry-specific-risks)
+   * [4.3. Conclusions](#43-conclusions)
+
 ## 0.1. Abstract
 
 This document gives a high level overview over DNS over HTTPS (DoH), both the
