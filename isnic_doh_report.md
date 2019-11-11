@@ -3,50 +3,47 @@
 # Should Registries offer DoH?
 
    * Author: Bjarni R. Einarsson, <bre@isnic.is>
-   * Version: 0.2
-   * Date: 2019-11-07
+   * Version: 1.0
+   * Date: 2019-11-11
+   * Source: <https://github.com/BRE-ISNIC/bre-doh-analysis>
 
 ## 0.1. Abstract
 
-This document gives an overview over DNS over HTTPS (DoH), both the technical
-and political issues surrounding the technology, with an analysis designed to
-inform decisions on whether DNS Registries in general should invest in offering
-DoH-based recursive resolver service to the public.
+This document gives a high level overview over DNS over HTTPS (DoH), both the
+technical and political issues surrounding the technology, with an analysis
+designed to inform decisions on whether DNS Registries in general should invest
+in offering DoH-based recursive resolver service to the public.
 
 ## 0.2. Disclaimer
 
-This document is the work of a single person who has opinions.
-Oversimpifications and rampant speculation abound. Reader beware!
+This document is the work of a single person who has opinions; much of what
+is stated here is best described as "informed speculation."
 
-## 0.3. Versions
+## 0.3. Credit and License
+
+This document is (C) Copyright 2019, Bjarni R. Einarsson and [ISNIC][19]. It
+was written both for our own internal enlightenment, and as a contribution
+to the [CENTR][21] DoH working group.
+
+This work is licensed under a [Creative Commons Attribution 4.0 International
+License][20].
+
+## 0.4. Versions
 
 |    date    | version | comments       | Author
 |:----------:|:-------:|:-------------- |:-------------------
+| 2019-11-11 |   1.0   | First release  | Bjarni R. Einarsson
 | 2019-11-07 |   0.2   | Draft          | Bjarni R. Einarsson
 | 2019-11-05 |   0.1   | Draft          | Bjarni R. Einarsson
-
-## 0.4. META: Tooling
-
-    # Prerequisites
-    sudo apt install plantuml discount
-
-    # Render HTML
-    markdown -STf+fencedcode <isnic_doh_report.md >isnic_doh_report.html     #!~
-
-    # Generate SVG
-    plantuml -tsvg isnic_doh_report.md
-
-    # Or...
-    grep '#!~' isnic_doh_report.md |grep -v grep |bash -v
-
-    # Look at the output
-    ls -lrth isnic_doh_report*                                               #!~
-    opener ./isnic_doh_report.html
-
 
 --------------------------------------------------------------------------------
 
 # 1. Technological background
+
+**Note:** *For the purposes of this document, the focus is on the use of DoH
+for communicating with recursive DNS resolvers; that is, technology used by
+operating systems and client software to look up information in the global DNS
+database. Other uses of DoH are out of scope.*
 
 ## 1.1. What is DNS over HTTPS (DoH)?
 
@@ -88,7 +85,8 @@ requests have traditionally used, to the stateful connections of TCP.
 It should be noted that in the context of DNS, DNS over HTTPS only provides
 security guarantees on a **hop-by-hop** basis (from Client to Resolver,
 Resolver to Resolver, or from Resolver to Authoritative Server), not
-end-to-end. A malicious DoH resolver can still monitor and modify DNS traffic.
+end-to-end. A malicious DoH server can still monitor and may also be able to
+modify DNS traffic.
 
 ## 1.2. Alternatives: DoT and DNSCrypt
 
@@ -168,9 +166,9 @@ other proposals to improve the security of DNS.
 Whether other applications (or entire operating systems) follow the browsers'
 down this path is yet to be seen, but seems likely.
 
-Market dynamics aside, DNS over HTTP also has compelling technical advantages.
+Market dynamics aside, DNS over HTTPS also has compelling technical advantages.
 
-[According to one publication][7], DNS over HTTP was the only secured DNS
+[According to one publication][7], DNS over HTTPS was the only secured DNS
 resolver protocol with performance that compared favourably with traditional
 (unencrypted) DNS queries. Although other implementations (DoT) might be able
 to catch up over time, this speaks to the immediate benefit of building on
@@ -229,8 +227,8 @@ content distribution.
 
 [The Chrome team's approach is currently more nuanced][16]. However, it seems
 likely that Google will eventually follow Mozilla's lead, for reasons discussed
-in sections [3.3.3](#L3.3.3.-Facilitating-Content-Delivery) and 
-[3.3.4](#L3.3.4.-User-Tracking-and-Metrics).
+in sections [3.3.3](#333-facilitating-content-delivery) and
+[3.3.4](#334-user-tracking-and-metrics).
 
 The good behaviour of these new DoH providers will be guaranteed not through
 technical means, but through contractual arrangements such as the [Mozilla DoH
@@ -255,7 +253,7 @@ through degradation of privacy or other manipulation of DNS, also oppose the
 move to DoH. In particular, a growing, vocal segment of the Internet community
 is deeply concerned with how powerful Google and CloudFlare have become and
 oppose this change on the grounds that it will embed them even further into the
-fabric of the Internet itself. 
+fabric of the Internet itself.
 
 On the other hand, those who are unhappy with the track record of local ISPs
 when it comes to respecting their users' privacy and the integrity of DNS, tend
@@ -338,7 +336,7 @@ Those who share the position stated in [RFC7258][14], that pervasive
 surveillance is an attack on the Internet-using public, will consider offering
 secure and encrypted services to be a social good and in the public interest.
 
-The concerns about DoH increasing centralization ([section 2](#L2.-Politics))
+The concerns about DoH increasing centralization ([section 2](#2-politics))
 may also be mitigated somewhat by increasing the diversity and availability of
 DoH providers.
 
@@ -353,7 +351,7 @@ can be addressed by a custom resolver service. These include:
 
    * Monitoring and management of Internet use, activity
    * Content filtering (ad blocking, "family filters", malware protection)
-   
+
 Businesses offering such services have existed for a long time, and many of
 them already offer DoH as an option.
 
@@ -426,19 +424,19 @@ pertaining to DNS and they also have an interest in guaranteeing the DNS system
 functions well and efficiently. So it is natural that many are considering
 whether they should take an active part in providing DoH infrastructure.
 
-Given the context of [section 3.3](#L3.3.-Why-Provide-DoH-3f-), the following
+Given the context of [section 3.3](#33-why-provide-doh), the following
 assesment can be made:
 
-DoH in the [Public Interest](#L3.3.1.-Public-Interest) is a relevant motivation
+DoH in the [Public Interest](#331-public-interest) is a relevant motivation
 for many Domain Registries.
 
 Using DoH to provide [Subscription Custom
-Resolvers](#L3.3.2.-Subscription-Custom-Resolvers) is a compelling option for
+Resolvers](#332-subscription-custom-resolvers) is a compelling option for
 businesses already offering such services, but for most registries this would
 be a new product, with no guarantee of market success.
 
 Registries may well see a benefit to [Facilitating Content
-Delivery](#L3.3.3.-Facilitating-Content-Delivery), especially if their domains
+Delivery](#333-facilitating-content-delivery), especially if their domains
 are associated with a well defined user base, as is often the case for ccTLD
 (country-code TLD) registries.  Taking steps to ensure that a given ccTLD is
 fast and reliable (compared with other top level domains) in its region is
@@ -449,7 +447,7 @@ that a ccTLD operator could negotiate partnerships with local ISPs, defusing
 some of the political concerns and participating in Chrome's current deployment
 strategy.
 
-Using DoH for [User Tracking and Metrics](#L3.3.4.-User-Tracking-and-Metrics)
+Using DoH for [User Tracking and Metrics](#334-user-tracking-and-metrics)
 may have value to Domain Registries, but registries operating in accordance
 with [RFC7258][14] would probably find it difficult to justify monetizing user
 tracking directly. That leaves aggregate statistics, which although valuable,
@@ -484,7 +482,7 @@ There may be a risk that the Registry's authoritative name servers could become
 
 DoH is here to stay.
 
-Offering DNS over HTTP service to the general public may be a reasonable
+Offering DNS over HTTPS service to the general public may be a reasonable
 activity for DNS Registries to participate in, both as a Public Interest effort
 to bolster the health of the wider DNS ecosystem, and as a way to compete and
 improve the performance of the domains they manage.
@@ -496,7 +494,6 @@ The risks associated with increased DNS traffic centralization, and increased
 legal scrutiny may outweigh these benefits.
 
 
---------------------------------------------------------------------------------
 
 [1]: https://tools.ietf.org/html/rfc8484
 [2]: https://tools.ietf.org/html/rfc1035
@@ -510,23 +507,12 @@ legal scrutiny may outweigh these benefits.
 [10]: https://tools.ietf.org/html/rfc7858
 [11]: https://dnscrypt.info/
 [12]: https://tools.ietf.org/html/rfc4033
-[13]: http://dnscookie.com/ 
+[13]: http://dnscookie.com/
 [14]: https://tools.ietf.org/html/rfc7258
 [15]: https://wiki.mozilla.org/Security/DOH-resolver-policy
 [16]: https://blog.chromium.org/2019/10/addressing-some-misconceptions-about.html
 [17]: https://00f.net/2019/11/03/stop-using-low-dns-ttls/
 [18]: https://tools.ietf.org/html/rfc7871
-
-<style type='text/css'>
-  body { max-width: 45em; margin: 1em auto;
-         font-family: sans-serif; font-size: 16px; }
-  body p { line-height: 19px; }
-  body h1:not(:first-child) { page-break-before: always; }
-  table { border-collapse: collapse; font-size: 1em; width: 100%; }
-  tr { padding: 0; margin: 0; }
-  tr:nth-child(even) {background-color: #f2f2f2;}
-  td, th { border: 1px solid #777; padding: 3px; margin: 0; }
-  code.uml { display: none; }
-  pre { margin: 0 0 2em 1em; }
-  hr { margin-top: 3em; color: #777; border-color: #777; }
-</style>
+[19]: https://www.isnic.is/
+[20]: https://creativecommons.org/licenses/by/4.0/
+[21]: https://centr.org/
